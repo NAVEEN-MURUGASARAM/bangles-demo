@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Checkout from "./pages/Checkout";
 import TermsCondition from "./pages/TermsCondition";
+import AdminDashboard from "./pages/AdminDashboard";
 import { UserProvider } from "./context/UserContext";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/:items/:name" element={<DynamicPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />

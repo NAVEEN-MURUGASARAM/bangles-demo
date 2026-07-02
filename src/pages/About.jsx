@@ -46,7 +46,7 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 flex flex-col items-center"
         >
-          <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-28 w-28 sm:h-36 sm:w-36 rounded-full object-cover shadow-md border border-gold-300 mb-6" />
+          <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-40 w-40 sm:h-52 sm:w-52 rounded-full object-cover shadow-lg border border-gold-300 mb-6 transition-all duration-300" />
           <h2 className="text-4xl md:text-5xl font-bold font-serif text-gray-800 mb-6">About Sparkle Bangles</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto prose font-sans leading-relaxed">
             Sparkle Bangles is a premium boutique dedicated to the art of handcrafted bangles. We craft unique traditional, glass, and gold-plated kadas that celebrate cultural heritage and empower you to shine with grace, sophistication, and custom-fit perfection.

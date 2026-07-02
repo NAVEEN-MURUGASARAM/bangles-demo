@@ -114,7 +114,7 @@ function Checkout() {
           transition={{ duration: 0.5 }}
           className="max-w-md w-full space-y-6 p-8 bg-white rounded-2xl shadow-xl border border-gold-200 text-center"
         >
-          <div className="mx-auto h-24 w-24 rounded-full border-2 border-gold-200 overflow-hidden shadow-sm flex items-center justify-center bg-gold-50">
+          <div className="mx-auto h-32 w-32 rounded-full border-2 border-gold-200 overflow-hidden shadow-md flex items-center justify-center bg-gold-50 transition-all duration-300">
             <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-full w-full object-cover" />
           </div>
           <h2 className="text-3xl font-bold text-gray-800 font-serif">Order Placed!</h2>

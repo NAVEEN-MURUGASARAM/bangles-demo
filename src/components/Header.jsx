@@ -148,7 +148,7 @@ const Header = React.memo(() => {
             className="flex items-center gap-2 sm:gap-3 font-bold text-xl sm:text-2xl text-gray-800 hover:text-gold-600 transition-colors duration-200 font-serif"
             aria-label="Sparkle Bangles Home"
           >
-            <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-9 w-9 sm:h-11 sm:w-11 rounded-full object-cover shadow-sm border border-gold-300" />
+            <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-14 w-14 sm:h-20 sm:w-20 rounded-full object-cover shadow-md border border-gold-300 transition-all duration-300" />
             <span className="tracking-wide text-lg sm:text-2xl">Sparkle Bangles</span>
           </NavLink>
 

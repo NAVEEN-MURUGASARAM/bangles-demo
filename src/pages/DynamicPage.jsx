@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import ProductPreview from "../components/ProductPreview";
 import { productsData } from "../data/products";
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 function DynamicPage() {
   const { items, name } = useParams();
@@ -23,7 +25,7 @@ function DynamicPage() {
     color: ["Gold", "Silver", "Rose Gold", "Red", "Green", "Blue"],
   }), []);
 
-  const fetchProducts = useCallback(() => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -32,14 +34,37 @@ function DynamicPage() {
         throw new Error("Invalid request parameters.");
       }
 
-      // Fetch from local static catalog data
-      const categoryData = productsData[items]?.[name];
-      if (!categoryData) {
-        throw new Error(`Bangle collection "${name}" not found.`);
+      let fetchedProducts = [];
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const allProducts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        if (items === "collections") {
+          fetchedProducts = allProducts.filter(
+            (p) => p.collection && p.collection.toLowerCase() === name.toLowerCase()
+          );
+        } else if (items === "categories") {
+          fetchedProducts = allProducts.filter(
+            (p) => p.category && p.category.toLowerCase() === name.toLowerCase()
+          );
+        }
+      } catch (firestoreErr) {
+        console.warn("Firestore products fetch failed. Falling back to local static catalog:", firestoreErr);
       }
 
-      setProducts(categoryData);
-      setFilteredProducts(categoryData);
+      if (fetchedProducts.length === 0) {
+        const categoryData = productsData[items]?.[name];
+        if (!categoryData) {
+          throw new Error(`Bangle collection "${name}" not found.`);
+        }
+        fetchedProducts = categoryData;
+      }
+
+      setProducts(fetchedProducts);
+      setFilteredProducts(fetchedProducts);
     } catch (err) {
       setError(err.message);
     } finally {
