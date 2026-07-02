@@ -15,12 +15,15 @@ const staticNavItems = [
 // Dropdown items
 const dropdownItems = {
   Collections: [
-    { to: "/collections/hasli", label: "Hasli" },
-    { to: "/collections/loka", label: "Loka" },
+    { to: "/collections/bridal", label: "Bridal Collection" },
+    { to: "/collections/festive", label: "Festive Collection" },
+    { to: "/collections/daily", label: "Daily Wear" },
   ],
   Categories: [
-    { to: "/categories/bangles", label: "Bangles" },
-    { to: "/categories/chokers", label: "Chokers" },
+    { to: "/categories/kada", label: "Kada Bangles" },
+    { to: "/categories/glass", label: "Glass Bangles" },
+    { to: "/categories/gold-plated", label: "Gold-Plated" },
+    { to: "/categories/stone-studded", label: "Stone-Studded" },
   ],
 };
 
@@ -41,7 +44,7 @@ const DropdownMenu = ({ title, items, isMobile, onItemClick }) => {
   return (
     <div className={isMobile ? "w-full" : "relative group"} ref={dropdownRef}>
       <button
-        className={`flex items-center gap-2 text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md p-1 ${
+        className={`flex items-center gap-2 text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-md p-1 ${
           isMobile ? "w-full justify-between" : ""
         }`}
         onClick={toggleDropdown}
@@ -74,7 +77,7 @@ const DropdownMenu = ({ title, items, isMobile, onItemClick }) => {
               <li key={item.to} role="menuitem">
                 <NavLink
                   to={item.to}
-                  className="block px-5 py-2.5 text-gray-700 hover:text-indigo-700 hover:bg-indigo-50 focus:bg-indigo-50 text-sm font-medium transition-colors duration-200"
+                  className="block px-5 py-2.5 text-gray-700 hover:text-maroon-800 hover:bg-gold-100 focus:bg-gold-100 text-sm font-medium transition-colors duration-200"
                   onClick={() => {
                     onItemClick();
                     setIsOpen(false);
@@ -142,10 +145,11 @@ const Header = React.memo(() => {
           {/* Logo */}
           <NavLink
             to="/"
-            className="flex items-center font-bold text-xl sm:text-2xl text-gray-800 hover:text-indigo-600 transition-colors duration-200"
-            aria-label="Miss Gypsy Home"
+            className="flex items-center gap-2 sm:gap-3 font-bold text-xl sm:text-2xl text-gray-800 hover:text-gold-600 transition-colors duration-200 font-serif"
+            aria-label="Sparkle Bangles Home"
           >
-            Miss Gypsy
+            <img src="/logo.png" alt="Sparkle Bangles Logo" className="h-9 w-9 sm:h-11 sm:w-11 rounded-full object-cover shadow-sm border border-gold-300" />
+            <span className="tracking-wide text-lg sm:text-2xl">Sparkle Bangles</span>
           </NavLink>
 
           {/* Desktop Navigation */}
@@ -155,8 +159,8 @@ const Header = React.memo(() => {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium ${
-                    isActive ? "text-indigo-700 border-b-2 border-indigo-700" : ""
+                  `text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium ${
+                    isActive ? "text-maroon-800 border-b-2 border-maroon-800" : ""
                   }`
                 }
                 aria-label={item.label}
@@ -177,7 +181,7 @@ const Header = React.memo(() => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md p-1"
+                className="flex items-center gap-2 text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-md p-1"
                 onClick={toggleUserDropdown}
                 onKeyDown={handleUserKeyDown}
                 aria-haspopup="true"
@@ -204,14 +208,14 @@ const Header = React.memo(() => {
                     role="menu"
                   >
                     {actionItems.map((item) => (
-                      <li key={item.to} role="menuitem" className="hover:bg-indigo-50">
+                      <li key={item.to} role="menuitem" className="hover:bg-gold-100">
                         {item.action ? (
                           <button
                             onClick={() => {
                               item.action();
                               setIsUserDropdownOpen(false);
                             }}
-                            className="block w-full text-left px-5 py-2.5 text-gray-700 hover:text-indigo-700 focus:bg-indigo-50 text-sm font-medium transition-colors duration-200"
+                            className="block w-full text-left px-5 py-2.5 text-gray-700 hover:text-maroon-800 focus:bg-gold-100 text-sm font-medium transition-colors duration-200"
                             aria-label={item.label}
                           >
                             {item.icon}
@@ -220,7 +224,7 @@ const Header = React.memo(() => {
                         ) : (
                           <NavLink
                             to={item.to}
-                            className="block px-5 py-2.5 text-gray-700 hover:text-indigo-700 hover:bg-indigo-50 focus:bg-indigo-50 text-sm font-medium transition-colors duration-200"
+                            className="block px-5 py-2.5 text-gray-700 hover:text-maroon-800 hover:bg-gold-100 focus:bg-gold-100 text-sm font-medium transition-colors duration-200"
                             onClick={() => setIsUserDropdownOpen(false)}
                             aria-label={item.label}
                           >
@@ -236,13 +240,13 @@ const Header = React.memo(() => {
             </div>
             <NavLink
               to="/cart"
-              className="relative flex items-center gap-1 text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium"
+              className="relative flex items-center gap-1 text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium"
               aria-label={`Cart with ${cart.length} items`}
             >
               <FaShoppingCart className="w-5 h-5" />
               <span>Cart</span>
               {cart.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-maroon-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cart.length}
                 </span>
               )}
@@ -254,7 +258,7 @@ const Header = React.memo(() => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMenu}
-            className="md:hidden text-2xl text-gray-600 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md p-1"
+            className="md:hidden text-2xl text-gray-600 hover:text-maroon-800 focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-md p-1"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
@@ -279,8 +283,8 @@ const Header = React.memo(() => {
                     <NavLink
                       to={item.to}
                       className={({ isActive }) =>
-                        `block text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium ${
-                          isActive ? "text-indigo-700 border-l-4 border-indigo-700 pl-2" : ""
+                        `block text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium ${
+                          isActive ? "text-maroon-800 border-l-4 border-maroon-800 pl-2" : ""
                         }`
                       }
                       onClick={() => setIsMenuOpen(false)}
@@ -314,7 +318,7 @@ const Header = React.memo(() => {
                           item.action();
                           setIsMenuOpen(false);
                         }}
-                        className="block w-full text-left text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium pl-7"
+                        className="block w-full text-left text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium pl-7"
                         aria-label={item.label}
                       >
                         {item.icon}
@@ -323,7 +327,7 @@ const Header = React.memo(() => {
                     ) : (
                       <NavLink
                         to={item.to}
-                        className="block text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium pl-7"
+                        className="block text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium pl-7"
                         onClick={() => setIsMenuOpen(false)}
                         aria-label={item.label}
                       >
@@ -336,14 +340,14 @@ const Header = React.memo(() => {
                 <li>
                   <NavLink
                     to="/cart"
-                    className="flex items-center gap-1 text-gray-600 hover:text-indigo-700 focus:text-indigo-700 transition-colors duration-200 text-base font-medium"
+                    className="flex items-center gap-1 text-gray-600 hover:text-maroon-800 focus:text-maroon-800 transition-colors duration-200 text-base font-medium"
                     onClick={() => setIsMenuOpen(false)}
                     aria-label={`Cart with ${cart.length} items`}
                   >
                     <FaShoppingCart className="w-5 h-5" />
                     <span>Cart</span>
                     {cart.length > 0 && (
-                      <span className="bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ml-1">
+                      <span className="bg-maroon-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ml-1">
                         {cart.length}
                       </span>
                     )}

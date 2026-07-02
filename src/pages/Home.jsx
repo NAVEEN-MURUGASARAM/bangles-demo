@@ -4,70 +4,51 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
-import { Timestamp } from "firebase/firestore"; // Import Timestamp for submission
+import { Timestamp } from "firebase/firestore";
 
-// Embedded JSON data
+// Bangle banners data with high-quality unsplash links
 const bannerData = {
   banners: [
     {
       id: "banner-001",
-      category: "categories/bangles",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerBangle_a1cnxq.jpg",
+      category: "collections/bridal",
+      image_url: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&h=500&q=80",
     },
     {
       id: "banner-002",
-      category: "categories/earrings",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerEarrings_xlth7l.jpg",
+      category: "categories/glass",
+      image_url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&h=500&q=80",
     },
     {
       id: "banner-003",
-      category: "categories/bangles",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerBangle_a1cnxq.jpg",
+      category: "collections/festive",
+      image_url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&h=500&q=80",
     },
     {
       id: "banner-004",
-      category: "collections/loka",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerLoka_l52kgp.jpg",
-    },
-    {
-      id: "banner-005",
-      category: "categories/chokers",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerChoker_na2ssr.jpg",
-    },
-    {
-      id: "banner-006",
-      category: "collections/hasli",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerHasli_iudl6p.jpg",
-    },
-    {
-      id: "banner-007",
-      category: "collections/nakshatra",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerNakshatra_c8eslj.jpg",
-    },
-    {
-      id: "banner-008",
-      category: "collections/hasli",
-      image_url: "https://res.cloudinary.com/dplnd4t4j/image/upload/v1750610945/BannerHasli_iudl6p.jpg",
-    },
+      category: "categories/kada",
+      image_url: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&h=500&q=80",
+    }
   ],
 };
 
-// Fallback image for broken URLs
-const FALLBACK_IMAGE = "https://via.placeholder.com/1200x600?text=Image+Not+Found";
+const FALLBACK_IMAGE = "https://via.placeholder.com/1200x500?text=Bangles+Collection";
 
-// Enrich banners with path and display name
+// Enrich banners with path and capitalized display name
 const banners = bannerData.banners.map((banner) => {
   const categorySegments = banner.category.split("/");
-  const displayName = categorySegments[categorySegments.length - 1].replace(/^\w/, (c) => c.toUpperCase());
+  const displayName = categorySegments[categorySegments.length - 1]
+    .replace("-", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
   return {
     ...banner,
     path: `/${banner.category}`,
-    displayName,
+    displayName: displayName + " Collection",
   };
 });
 
-// Featured items (Loka, Bangles, Hasli, Chokers)
-const featuredCategories = ["collections/loka", "categories/bangles", "collections/hasli", "categories/chokers"];
+// Featured items (Bridal, Festive, Kada, Glass)
+const featuredCategories = ["collections/bridal", "collections/festive", "categories/kada", "categories/glass"];
 const featuredItems = featuredCategories
   .map((cat) => {
     const banner = banners.find((b) => b.category === cat);
@@ -93,7 +74,7 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % banners.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -152,10 +133,10 @@ function Home() {
     setIsSubmitting(true);
     try {
       const newReview = {
-        name: formData.name.trim() || "Anonymous",
+        name: formData.name.trim() || "Anonymous Customer",
         rating: formData.rating,
         comment: formData.comment.trim(),
-        timestamp: Timestamp.now(), // Use Firestore Timestamp
+        timestamp: Timestamp.now(),
       };
       const docRef = await addDoc(collection(db, "reviews"), newReview);
       setReviews((prev) => [
@@ -181,11 +162,9 @@ function Home() {
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return "N/A";
     try {
-      // Handle Firestore Timestamp
       if (timestamp.toDate && typeof timestamp.toDate === "function") {
         return new Date(timestamp.toDate()).toLocaleDateString();
       }
-      // Handle string or number
       const date = new Date(timestamp);
       return isNaN(date.getTime()) ? "N/A" : date.toLocaleDateString();
     } catch (error) {
@@ -196,34 +175,34 @@ function Home() {
 
   // Animation variants
   const slideVariants = {
-    initial: { opacity: 0, x: 50, scale: 0.95 },
+    initial: { opacity: 0, x: 30, scale: 0.98 },
     animate: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.8, ease: "easeOut" } },
-    exit: { opacity: 0, x: -50, scale: 0.95, transition: { duration: 0.8, ease: "easeIn" } },
+    exit: { opacity: 0, x: -30, scale: 0.98, transition: { duration: 0.8, ease: "easeIn" } },
   };
 
   const cardVariants = {
-    initial: { opacity: 0, y: 20, scale: 0.9 },
+    initial: { opacity: 0, y: 20, scale: 0.95 },
     animate: (i) => ({
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.6, delay: i * 0.1, type: "spring", stiffness: 120 },
+      transition: { duration: 0.6, delay: i * 0.1, type: "spring", stiffness: 100 },
     }),
   };
 
   const reviewVariants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 15 },
     animate: (i) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, delay: i * 0.1 },
+      transition: { duration: 0.5, delay: i * 0.08 },
     }),
   };
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gold-50 min-h-screen">
       {/* Hero Banner with Slider */}
-      <section className="relative h-[50vh] sm:h-[60vh] md:h-[80vh] overflow-hidden" role="region" aria-label="Hero banner">
+      <section className="relative h-[45vh] sm:h-[60vh] md:h-[75vh] overflow-hidden" role="region" aria-label="Hero banner">
         <AnimatePresence mode="wait">
           {banners.map((banner, index) =>
             index === currentSlide ? (
@@ -237,28 +216,36 @@ function Home() {
               >
                 <NavLink
                   to={banner.path}
-                  aria-label={`View ${banner.displayName} collection`}
-                  className="block w-full h-full"
+                  aria-label={`View ${banner.displayName}`}
+                  className="block w-full h-full relative"
                 >
                   <img
                     src={banner.image_url}
-                    alt={`Explore ${banner.displayName} jewelry collection`}
-                    className="w-full h-full object-cover hover:bg-black/20 transition-opacity duration-300"
+                    alt={`Explore ${banner.displayName}`}
+                    className="w-full h-full object-cover transition-all duration-300"
                     loading="lazy"
                     onError={(e) => {
                       console.error(`Failed to load banner image: ${banner.image_url}`);
                       e.target.src = FALLBACK_IMAGE;
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 flex flex-col justify-end p-8 sm:p-16">
+                    <h2 className="text-white text-3xl sm:text-5xl font-bold font-serif mb-2 tracking-wide drop-shadow-md">
+                      {banner.displayName}
+                    </h2>
+                    <p className="text-gold-200 text-sm sm:text-lg font-light tracking-widest uppercase mb-4 drop-shadow-sm">
+                      Handcrafted Masterpieces
+                    </p>
+                  </div>
                 </NavLink>
                 <motion.button
                   onClick={scrollToReviews}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-sm sm:text-base px-4 sm:px-6 py-1.5 sm:py-2 rounded-full hover:bg-blue-700 transition-colors duration-200 min-w-[120px]"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="absolute bottom-6 right-6 bg-maroon-800 text-white text-xs sm:text-sm px-5 py-2.5 rounded-full hover:bg-maroon-900 transition-colors duration-200 shadow-lg cursor-pointer"
                   aria-label="View customer reviews"
                 >
-                  View Reviews
+                  Reviews & Feedback
                 </motion.button>
               </motion.div>
             ) : null
@@ -268,19 +255,22 @@ function Home() {
 
       {/* Featured Items Section */}
       <section
-        className="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         role="region"
         aria-label="Featured items"
       >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center tracking-tight"
+          className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2 text-center tracking-tight font-serif"
         >
-          Featured Collections
+          Curated Collections
         </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <p className="text-gray-500 text-center mb-10 text-sm max-w-md mx-auto">
+          Indulge in our exquisite collections made for weddings, festivals, and elegant daily styling.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredItems.map((item, index) => (
             <motion.div
               key={item.id}
@@ -288,30 +278,32 @@ function Home() {
               initial="initial"
               animate="animate"
               custom={index}
-              className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gold-100/50 bg-white"
             >
               <NavLink
                 to={item.path}
-                aria-label={`View ${item.displayName} collection`}
+                aria-label={`View ${item.displayName}`}
                 className="block"
               >
-                <img
-                  src={item.image_url}
-                  alt={`Explore ${item.displayName} jewelry collection`}
-                  className="w-full h-48 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                  onError={(e) => {
-                    console.error(`Failed to load featured image: ${item.image_url}`);
-                    e.target.src = FALLBACK_IMAGE;
-                  }}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                  <motion.h3
-                    className="text-white text-lg sm:text-xl font-semibold"
-                    whileHover={{ y: -5 }}
-                  >
-                    {item.displayName}
-                  </motion.h3>
+                <div className="overflow-hidden h-52 sm:h-72 relative">
+                  <img
+                    src={item.image_url}
+                    alt={`Explore ${item.displayName}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    onError={(e) => {
+                      console.error(`Failed to load featured image: ${item.image_url}`);
+                      e.target.src = FALLBACK_IMAGE;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex items-end justify-center p-4">
+                    <motion.h3
+                      className="text-white text-lg sm:text-xl font-semibold font-serif text-center"
+                      whileHover={{ y: -2 }}
+                    >
+                      {item.displayName.replace(" Collection", "")}
+                    </motion.h3>
+                  </div>
                 </div>
               </NavLink>
             </motion.div>
@@ -322,150 +314,157 @@ function Home() {
       {/* Customer Reviews Section */}
       <section
         ref={reviewsRef}
-        className="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white"
+        className="py-12 sm:py-16 bg-white border-t border-gold-100"
         role="region"
         aria-label="Customer reviews"
       >
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center tracking-tight"
-        >
-          Customer Reviews
-        </motion.h2>
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
-          {/* Review Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-md"
+            className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2 text-center tracking-tight font-serif"
           >
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Share Your Feedback</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  Name (optional)
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Anonymous"
-                  className={`mt-1 block w-full border rounded-md p-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  }`}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "name-error" : undefined}
-                />
-                {errors.name && (
-                  <p id="name-error" className="text-red-500 text-xs sm:text-sm mt-1">{errors.name}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Rating</label>
-                <div className="flex space-x-1 mt-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <motion.button
-                      key={star}
-                      type="button"
-                      onClick={() => handleRating(star)}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`text-xl sm:text-2xl ${formData.rating >= star ? "text-yellow-400" : "text-gray-300"}`}
-                      aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
-                    >
-                      <FaStar />
-                    </motion.button>
-                  ))}
+            What Our Patrons Say
+          </motion.h2>
+          <p className="text-gray-500 text-center mb-12 text-sm max-w-md mx-auto">
+            Discover feedback from customers who wear Sparkle Bangles with pride.
+          </p>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* Review Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-gold-50/50 p-6 sm:p-8 rounded-2xl border border-gold-100 shadow-sm"
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-6 font-serif">Share Your Feedback</h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Your Name (optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Anonymous Patron"
+                    className={`mt-1 block w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none bg-white ${
+                      errors.name ? "border-red-500" : "border-gray-200"
+                    }`}
+                    aria-invalid={!!errors.name}
+                  />
+                  {errors.name && (
+                    <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                  )}
                 </div>
-                {errors.rating && (
-                  <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.rating}</p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Your Rating</label>
+                  <div className="flex space-x-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <motion.button
+                        key={star}
+                        type="button"
+                        onClick={() => handleRating(star)}
+                        whileHover={{ scale: 1.15 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`text-2xl cursor-pointer ${formData.rating >= star ? "text-amber-500" : "text-gray-200"}`}
+                        aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+                      >
+                        <FaStar />
+                      </motion.button>
+                    ))}
+                  </div>
+                  {errors.rating && (
+                    <p className="text-red-500 text-xs mt-1">{errors.rating}</p>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
+                    Comment
+                  </label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    value={formData.comment}
+                    onChange={handleChange}
+                    placeholder="Write a few words about our bangles, fitting, or service..."
+                    className={`mt-1 block w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none bg-white ${
+                      errors.comment ? "border-red-500" : "border-gray-200"
+                    }`}
+                    rows="4"
+                    aria-invalid={!!errors.comment}
+                  />
+                  {errors.comment && (
+                    <p className="text-red-500 text-xs mt-1">{errors.comment}</p>
+                  )}
+                </div>
+                {errors.submit && (
+                  <p className="text-red-500 text-xs">{errors.submit}</p>
                 )}
-              </div>
-              <div>
-                <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
-                  Comment
-                </label>
-                <textarea
-                  id="comment"
-                  name="comment"
-                  value={formData.comment}
-                  onChange={handleChange}
-                  placeholder="Tell us about your experience..."
-                  className={`mt-1 block w-full border rounded-md p-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 ${
-                    errors.comment ? "border-red-500" : "border-gray-300"
-                  }`}
-                  rows="3 sm:rows-4"
-                  aria-invalid={!!errors.comment}
-                  aria-describedby={errors.comment ? "comment-error" : undefined}
-                />
-                {errors.comment && (
-                  <p id="comment-error" className="text-red-500 text-xs sm:text-sm mt-1">{errors.comment}</p>
-                )}
-              </div>
-              {errors.submit && (
-                <p className="text-red-500 text-xs sm:text-sm">{errors.submit}</p>
-              )}
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full bg-blue-600 text-white py-1.5 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm sm:text-base"
-                disabled={isSubmitting}
-                aria-label="Submit review"
-              >
-                {isSubmitting ? "Submitting..." : "Submit Review"}
-              </motion.button>
-            </form>
-          </motion.div>
-          {/* Review Display */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">What Our Customers Say</h3>
-            {isLoadingReviews ? (
-              <p className="text-gray-600 text-sm sm:text-base">Loading reviews...</p>
-            ) : errors.fetch ? (
-              <p className="text-red-500 text-sm sm:text-base">{errors.fetch}</p>
-            ) : reviews.length === 0 ? (
-              <p className="text-gray-600 text-sm sm:text-base">No reviews yet. Be the first to share your feedback!</p>
-            ) : (
-              <motion.ul className="space-y-4" role="list">
-                {reviews.map((review, index) => (
-                  <motion.li
-                    key={review.id}
-                    variants={reviewVariants}
-                    initial="initial"
-                    animate="animate"
-                    custom={index}
-                    className="bg-gray-50 p-4 rounded-lg shadow-md"
-                    role="listitem"
-                  >
-                    <div className="flex items-center mb-2">
-                      <span className="font-medium text-gray-800 text-sm sm:text-base">{review.name}</span>
-                      <div className="flex ml-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <FaStar
-                            key={star}
-                            className={`text-xs sm:text-sm ${review.rating >= star ? "text-yellow-400" : "text-gray-300"}`}
-                          />
-                        ))}
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-maroon-800 hover:bg-maroon-900 text-white font-medium py-3 rounded-xl transition-colors duration-200 text-sm shadow-sm cursor-pointer disabled:bg-gray-400"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Review"}
+                </motion.button>
+              </form>
+            </motion.div>
+
+            {/* Review Display */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-6"
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-6 font-serif">Customer Stories</h3>
+              {isLoadingReviews ? (
+                <p className="text-gray-500 text-sm">Loading customer feedback...</p>
+              ) : errors.fetch ? (
+                <p className="text-red-500 text-sm">{errors.fetch}</p>
+              ) : reviews.length === 0 ? (
+                <p className="text-gray-500 text-sm italic">No reviews yet. Be the first to share your experience with our bangles!</p>
+              ) : (
+                <motion.ul className="space-y-4" role="list">
+                  {reviews.map((review, index) => (
+                    <motion.li
+                      key={review.id}
+                      variants={reviewVariants}
+                      initial="initial"
+                      animate="animate"
+                      custom={index}
+                      className="bg-gold-50/20 p-5 rounded-2xl border border-gold-100 shadow-sm flex flex-col justify-between"
+                      role="listitem"
+                    >
+                      <div>
+                        <div className="flex items-center mb-2">
+                          <span className="font-semibold text-gray-800 text-sm sm:text-base">{review.name}</span>
+                          <div className="flex ml-2">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <FaStar
+                                key={star}
+                                className={`text-xs ${review.rating >= star ? "text-amber-500" : "text-gray-200"}`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-gray-600 text-sm italic">"{review.comment}"</p>
                       </div>
-                    </div>
-                    <p className="text-gray-600 text-xs sm:text-sm">{review.comment}</p>
-                    <p className="text-gray-400 text-xs mt-2">{formatTimestamp(review.timestamp)}</p>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            )}
-          </motion.div>
+                      <p className="text-gray-400 text-[10px] mt-4 self-end uppercase font-semibold tracking-wider">
+                        {formatTimestamp(review.timestamp)}
+                      </p>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              )}
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>

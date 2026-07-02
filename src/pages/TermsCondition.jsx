@@ -1,9 +1,7 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 
 function TermsCondition() {
-  // Animation variants for page content
   const containerVariants = {
     initial: { opacity: 0, y: 20 },
     animate: {
@@ -19,9 +17,9 @@ function TermsCondition() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gold-50 min-h-screen">
       <motion.section
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
         role="region"
         aria-label="Terms and Conditions"
         variants={containerVariants}
@@ -29,134 +27,92 @@ function TermsCondition() {
         animate="animate"
       >
         <motion.h1
-          className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center tracking-tight"
+          className="text-3xl md:text-4xl font-bold font-serif text-gray-800 mb-8 text-center tracking-tight border-b border-gold-200 pb-4"
           variants={itemVariants}
         >
           Terms and Conditions
         </motion.h1>
 
-        <motion.div className="prose prose-lg text-gray-700 mx-auto" variants={itemVariants}>
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            1. Introduction
-          </motion.h2>
+        <motion.div className="prose prose-md text-gray-600 mx-auto space-y-6 font-sans leading-relaxed" variants={itemVariants}>
           <motion.p variants={itemVariants}>
-            Welcome to [Your Company Name] ("we," "us," or "our"). These Terms and Conditions govern your use of our website
-            [Your Website URL] and any purchases made through it. By accessing or using our services, you agree to be bound by
+            Welcome to <strong>Sparkle Bangles</strong> ("we," "us," or "our"). These Terms and Conditions govern your use of our website
+            <a href="https://sparklebangles.com" className="text-maroon-800 hover:underline"> https://sparklebangles.com</a> and any purchases made through it. By accessing or using our services, you agree to be bound by
             these terms.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            2. Acceptance of Terms
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            1. Acceptance of Terms
           </motion.h2>
           <motion.p variants={itemVariants}>
             By using our website, placing an order, or creating an account, you confirm that you are at least 18 years old (or
             have parental consent if under 18) and agree to these terms. If you do not agree, please do not use our services.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            3. Orders
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            2. Offline Order Placement
           </motion.h2>
           <motion.p variants={itemVariants}>
-            All orders are subject to acceptance and availability. We reserve the right to refuse or cancel an order for any
-            reason, including pricing errors or stock unavailability. You will be notified if an order cannot be fulfilled, and
-            any payments will be refunded.
+            Sparkle Bangles operates a boutique-style catalog. When you submit your checkout form, your order is recorded in our system as a reservation request. We do not process online credit card transactions on the website. A representative will contact you via email or phone shortly after order placement to confirm available sizes, coordinate payment methods (such as UPI, Net Banking, or cash options), and arrange shipping.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            4. Pricing and Payments
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            3. Pricing and Sizing
           </motion.h2>
           <motion.p variants={itemVariants}>
-            All prices are listed in Indian Rupees (₹) and include applicable taxes unless otherwise stated. We accept payments
-            via credit/debit cards, UPI, and PayPal. Payment must be completed before an order is processed. We reserve the right
-            to adjust prices without prior notice, but confirmed orders will be honored at the agreed price.
+            All prices are listed in Indian Rupees (₹) and include applicable taxes. Sizing is indicated in traditional Indian bangle diameters (e.g. 2.4, 2.6, 2.8, 2.10). We recommend measuring your size before ordering to ensure correct fitting. We reserve the right to adjust prices or stock availability without prior notice.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            5. Shipping and Delivery
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            4. Shipping and Delivery
           </motion.h2>
           <motion.p variants={itemVariants}>
-            We ship to addresses within [Your Shipping Regions, e.g., India]. Shipping costs and estimated delivery times are
-            provided at checkout. Delivery times are estimates and may vary due to external factors (e.g., courier delays). We are
-            not responsible for delays beyond our control.
+            We ship to addresses within <strong>India</strong>. Shipping costs and estimated delivery times are
+            provided at the time of order confirmation. Delivery times are estimates and may vary due to external factors (e.g., courier delays).
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            6. Returns and Refunds
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            5. Returns and Refunds
           </motion.h2>
           <motion.p variants={itemVariants}>
-            We offer returns within [Your Return Period, e.g., 7 days] of delivery for unused, undamaged items in original
-            packaging. To initiate a return, contact us at [Your Contact Email]. Refunds will be processed within [Your Refund
-            Processing Time, e.g., 5-10 business days] after we receive the returned item. Shipping costs are non-refundable
-            unless the item is defective.
+            We offer returns within <strong>7 days</strong> of delivery for unused, undamaged items in original
+            packaging. To initiate a return, contact us at <strong>support@sparklebangles.com</strong>. Refunds will be processed within <strong>7-10 business days</strong> after we receive and inspect the returned item.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            7. Intellectual Property
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            6. Intellectual Property
           </motion.h2>
           <motion.p variants={itemVariants}>
-            All content on our website, including images, logos, product descriptions, and designs, is owned by [Your Company
-            Name] or our licensors. You may not reproduce, distribute, or use our content without prior written permission.
+            All content on our website, including images, logos, product descriptions, and designs, is owned by Sparkle Bangles or our licensors. You may not reproduce, distribute, or use our content without prior written permission.
           </motion.p>
 
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            8. User Conduct
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            7. Limitation of Liability
           </motion.h2>
           <motion.p variants={itemVariants}>
-            You agree not to:
+            To the fullest extent permitted by law, Sparkle Bangles is not liable for any indirect, incidental, or
+            consequential damages arising from your use of our website or products. Our liability is limited to the amount paid for the product in question.
           </motion.p>
-          <motion.ul className="list-disc pl-6 mb-4" variants={itemVariants}>
-            <motion.li variants={itemVariants}>Use our website for unlawful purposes.</motion.li>
-            <motion.li variants={itemVariants}>Attempt to access unauthorized areas of our systems.</motion.li>
-            <motion.li variants={itemVariants}>Post false, misleading, or harmful content.</motion.li>
-            <motion.li variants={itemVariants}>Interfere with the website’s functionality.</motion.li>
+
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            8. Governing Law
+          </motion.h2>
+          <motion.p variants={itemVariants}>
+            These terms are governed by the laws of <strong>India</strong>. Any disputes will be resolved in the courts of <strong>Mumbai</strong>.
+          </motion.p>
+
+          <motion.h2 className="text-2xl font-bold font-serif text-gray-800 mt-6" variants={itemVariants}>
+            9. Contact Us
+          </motion.h2>
+          <motion.p variants={itemVariants}>
+            For questions about these Terms and Conditions, please contact us at:
+          </motion.p>
+          <motion.ul className="list-none pl-0 space-y-1 font-semibold text-gray-700" variants={itemVariants}>
+            <li>Email: support@sparklebangles.com</li>
+            <li>Address: 123 Bangle Street, Mumbai, India</li>
+            <li>Phone: +91 123 456 7890</li>
           </motion.ul>
-
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            9. Limitation of Liability
-          </motion.h2>
-          <motion.p variants={itemVariants}>
-            To the fullest extent permitted by law, [Your Company Name] is not liable for any indirect, incidental, or
-            consequential damages arising from your use of our website or products. Our liability is limited to the amount paid
-            for the product in question.
-          </motion.p>
-
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            10. Termination
-          </motion.h2>
-          <motion.p variants={itemVariants}>
-            We may suspend or terminate your access to our website if you violate these terms or engage in conduct we deem
-            harmful. You may close your account at any time by contacting us.
-          </motion.p>
-
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            11. Governing Law
-          </motion.h2>
-          <motion.p variants={itemVariants}>
-            These terms are governed by the laws of [Your Jurisdiction, e.g., India]. Any disputes will be resolved in the courts
-            of [Your City, e.g., Mumbai].
-          </motion.p>
-
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            12. Contact Us
-          </motion.h2>
-          <motion.p variants={itemVariants}>
-            For questions about these Terms and Conditions, contact us at:
-          </motion.p>
-          <motion.ul className="list-none pl-0 mb-4" variants={itemVariants}>
-            <motion.li variants={itemVariants}>Email: [Your Contact Email]</motion.li>
-            <motion.li variants={itemVariants}>Address: [Your Company Address]</motion.li>
-            <motion.li variants={itemVariants}>Phone: [Your Contact Phone Number]</motion.li>
-          </motion.ul>
-
-          <motion.h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4" variants={itemVariants}>
-            13. Changes to These Terms
-          </motion.h2>
-          <motion.p variants={itemVariants}>
-            We may update these Terms and Conditions periodically. Changes will be posted on this page with an updated effective
-            date. Please review these terms regularly.
-          </motion.p>
-          <motion.p variants={itemVariants}>
-            Effective Date: June 22, 2025
+          <motion.p className="text-xs text-gray-400 mt-8" variants={itemVariants}>
+            Effective Date: July 2, 2026
           </motion.p>
         </motion.div>
       </motion.section>

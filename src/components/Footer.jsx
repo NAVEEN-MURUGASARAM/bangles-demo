@@ -20,7 +20,7 @@ function Footer() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-sm font-light text-gray-300"
         >
-          © {new Date().getFullYear()} Miss Gypsy. All rights reserved.
+          © {new Date().getFullYear()} Sparkle Bangles. All rights reserved.
         </motion.p>
         <div className="mt-6 flex justify-center space-x-6">
           <MotionNavLink
